@@ -14,6 +14,11 @@ import java.io.IOException;
 import java.util.zip.GZIPInputStream;
 import java.util.zip.GZIPOutputStream;
 
+import org.apache.log4j.BasicConfigurator;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
+
+
 /**
 * @ClassName: GzipUtil
 * @Description: Gzip compression and decompression methods
@@ -23,8 +28,11 @@ import java.util.zip.GZIPOutputStream;
 public class GzipUtil {
 	
 	private static GzipUtil instance = null;
+	private static final Logger logger = Logger.getLogger(GzipUtil.class);
 	
-	private GzipUtil() {}
+	private GzipUtil() {
+		PropertyConfigurator.configure("log4j.properties");
+	}
 	
 	public static GzipUtil getInstance() {
 		if (instance == null)
@@ -51,8 +59,9 @@ public class GzipUtil {
 			}
 			fos.close();
 			gis.close();
+			logger.info("Decompress " + gzipFile + " to " + newFile);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Fail to decompress.", e);
 		}
 	}
 	
@@ -76,14 +85,15 @@ public class GzipUtil {
 			gzipOS.close();
 			fos.close();
 			fis.close();
+			logger.info("Compress " + file + " to " + gzipFile);
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Fail to compress.", e);
 		}
 	}
 
 	public static void main(String[] args) {
 		GzipUtil util = GzipUtil.getInstance();
-		util.decompressGzipFile("1532079931728.json.gz", "ungzipped/111.json");
+		util.decompressGzipFile("1532079931728.json.gz", "ungzipped/" + System.currentTimeMillis() + ".json");
 		util.compressGzipFile("ungzipped/111.json", "ungzipped/newFile.json.gz");
 	}
 	

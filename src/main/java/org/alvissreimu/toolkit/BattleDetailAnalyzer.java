@@ -17,8 +17,11 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.alvissreimu.util.GzipUtil;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
+import org.apache.log4j.Logger;
+import org.apache.log4j.PropertyConfigurator;
 
 /**
 * @ClassName: BattleDetailAnalyzer
@@ -29,6 +32,11 @@ import org.apache.commons.csv.CSVRecord;
 public class BattleDetailAnalyzer {
 	
 	private static final String battleDetailPath = "~/Library/Application Support/poi/battle-detail";
+	private static final Logger logger = Logger.getLogger(GzipUtil.class);
+	
+	public BattleDetailAnalyzer() {
+		PropertyConfigurator.configure("log4j.properties");
+	}
 	
 	/** 
 	* @Title: importBattleDetailsFromCSV 
@@ -50,7 +58,7 @@ public class BattleDetailAnalyzer {
 						record.get("Grade")));
 			}
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Fail to import battle details.", e);
 		}
 		return details;
 	}
@@ -71,7 +79,7 @@ public class BattleDetailAnalyzer {
 			}
 			writer.close();
 		} catch (IOException e) {
-			e.printStackTrace();
+			logger.error("Fail to write CSV.", e);
 		}
 	}
 	
@@ -92,9 +100,13 @@ public class BattleDetailAnalyzer {
 		return details;
 	}
 	
+	public void importBattleDetails(String path) {
+		
+	}
+	
 	public static void main(String[] args) {
 		BattleDetailAnalyzer analyzer = new BattleDetailAnalyzer();
-		List<BattleDetail> details1 = analyzer.importBattleDetailsFromCSV("ungzipped/1.csv");
+		List<BattleDetail> details1 = analyzer.importBattleDetailsFromCSV("ungzipped/12.csv");
 		List<BattleDetail> details2 = analyzer.importBattleDetailsFromCSV("ungzipped/2.csv");
 		List<BattleDetail> details = analyzer.combineDetails(details1, details2);
 		for (BattleDetail d: details)
