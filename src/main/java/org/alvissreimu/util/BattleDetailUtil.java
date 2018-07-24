@@ -1,12 +1,12 @@
 /**  
-* @Title: BattleDetailAnalyzer.java
-* @Package org.alvissreimu.toolkit
+* @Title: BattleDetailUtil.java
+* @Package org.alvissreimu.util
 * @Description: TODO
 * @author Minghao Li
-* @date Jul 24, 2018 11:53:26 AM
+* @date Jul 24, 2018 4:25:43 PM
 * @version V1.0  
 */
-package org.alvissreimu.toolkit;
+package org.alvissreimu.util;
 
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -17,25 +17,31 @@ import java.util.Collections;
 import java.util.LinkedList;
 import java.util.List;
 
-import org.alvissreimu.util.GzipUtil;
+import org.alviss.data.BattleDetail;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 /**
-* @ClassName: BattleDetailAnalyzer
-* @Description: TODO
+* @ClassName: BattleDetailUtil
+* @Description: Methods to handle battle details
 * @author Minghao Li
-* @date Jul 24, 2018 11:53:26 AM
+* @date Jul 24, 2018 4:25:43 PM
 */
-public class BattleDetailAnalyzer {
+public class BattleDetailUtil {
 	
-	private static final String battleDetailPath = "~/Library/Application Support/poi/battle-detail";
-	private static final Logger logger = Logger.getLogger(GzipUtil.class);
+	private static BattleDetailUtil instance = null;
+	private static final Logger logger = Logger.getLogger(BattleDetailUtil.class);
 	
-	public BattleDetailAnalyzer() {
+	private BattleDetailUtil() {
 		PropertyConfigurator.configure("log4j.properties");
+	}
+	
+	public static BattleDetailUtil getInstance() {
+		if (instance == null)
+			instance = new BattleDetailUtil();
+		return instance;
 	}
 	
 	/** 
@@ -102,15 +108,6 @@ public class BattleDetailAnalyzer {
 	
 	public void importBattleDetails(String path) {
 		
-	}
-	
-	public static void main(String[] args) {
-		BattleDetailAnalyzer analyzer = new BattleDetailAnalyzer();
-		List<BattleDetail> details1 = analyzer.importBattleDetailsFromCSV("ungzipped/12.csv");
-		List<BattleDetail> details2 = analyzer.importBattleDetailsFromCSV("ungzipped/2.csv");
-		List<BattleDetail> details = analyzer.combineDetails(details1, details2);
-		for (BattleDetail d: details)
-			System.out.println(d);
 	}
 	
 }
