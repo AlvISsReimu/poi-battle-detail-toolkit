@@ -6,7 +6,7 @@
 * @date Jul 24, 2018 2:47:32 PM
 * @version V1.0  
 */
-package org.alviss.data;
+package org.alvissreimu.data;
 
 /**
 * @ClassName: BattleDetail
