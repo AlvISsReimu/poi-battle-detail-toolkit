@@ -31,8 +31,9 @@ import org.apache.log4j.PropertyConfigurator;
 */
 public class BattleDetailUtil {
 	
-	private static BattleDetailUtil instance = null;
 	private static final Logger logger = Logger.getLogger(BattleDetailUtil.class);
+	
+	private static BattleDetailUtil instance = null;
 	
 	private BattleDetailUtil() {
 		PropertyConfigurator.configure("log4j.properties");
@@ -104,10 +105,6 @@ public class BattleDetailUtil {
 			details.add(d);
 		Collections.sort(details, (a, b) -> (int)(b.getTimestamp() - a.getTimestamp()));
 		return details;
-	}
-	
-	public void importBattleDetails(String path) {
-		
 	}
 	
 }

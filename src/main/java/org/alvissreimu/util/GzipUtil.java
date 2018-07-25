@@ -26,8 +26,9 @@ import org.apache.log4j.PropertyConfigurator;
 */
 public class GzipUtil {
 	
-	private static GzipUtil instance = null;
 	private static final Logger logger = Logger.getLogger(GzipUtil.class);
+	
+	private static GzipUtil instance = null;
 	
 	private GzipUtil() {
 		PropertyConfigurator.configure("log4j.properties");
